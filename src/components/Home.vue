@@ -35,12 +35,11 @@
             myvar: "Home"
         }
     },
-    created: function() {
-      console.log("Ready")
-      setInterval(() => {
-          this.inter += this.random(-1, 1) * 1; 
-          this.ext += this.random(-1, 1) * 1;
-      }, 5000);
+    sockets:{
+      temperatures({inter, ext})  { 
+        console.log(ext, inter);
+        return Object.assign(this, { inter, ext })
+      }
     },
     methods: {
       random(min, max) {

@@ -10,7 +10,6 @@ import 'vuetify/dist/vuetify.min.css'
 Vue.use(Vuetify)
 Vue.use(VueSocketio, `ws://${window.location.hostname}:3000`);
 
-
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
@@ -22,9 +21,6 @@ new Vue({
   sockets:{
     connect: function(){
       console.log('socket connected')
-    },
-    customEmit: function(val){
-      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
     }
   }
 })

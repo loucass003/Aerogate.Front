@@ -1,50 +1,64 @@
 <template>
   <v-container fluid grid-list-md>
     <v-layout wrap>
-      <v-text-field type="text" placeholder="Text input" @focus="show" data-layout="normal" v-model="text"></v-text-field>
+      <v-flex xs-12>
+        <v-expansion-panel>
+          <v-expansion-panel-content value="true">
+            <div slot="header">
+              Wireless Networks
+              <v-btn icon @click.stop="refreshNetworks()" :disabled="networksRequest">
+                <v-icon>refresh</v-icon>
+              </v-btn>
+            </div>
+            <v-card>
+              <v-data-table
+                :headers="networks_header"
+                :items="networks"
+                hide-actions
+                class="elevation-1"
+                :loading="networksRequest"
+              >
+                <template slot="items" slot-scope="props">
+                  <td>{{ props.item.ssid || '(No SSID)' }}</td>
+                  <td>{{ props.item.flags }}</td>
+                </template>
+              </v-data-table>
+            </v-card>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-flex>
     </v-layout>
-    <v-bottom-sheet v-model="visible" persistent hide-overlay>
-      <vue-touch-keyboard :layout="layout" :cancel="hide" :accept="hide" :input="input" :change="change" />
-    </v-bottom-sheet>
   </v-container>
 
 </template>
 
 <script>
-  import Vue from 'vue'
-  import vuetouchkeyboard from 'vue-touch-keyboard'
-  import style from "vue-touch-keyboard/dist/vue-touch-keyboard.css";
-
-
-  Vue.use(vuetouchkeyboard);
 
   export default {
     name: 'settings',
-    components: { vuetouchkeyboard },
     data() {
       return {
-        text: "",
-        visible: false,
-        layout: "normal",
-        input: null,
-        options: {
-          useKbEvents: false
-        }
+        networks_header: [
+          { text: 'SSID', value: 'ssid'},
+          { text: 'FLAGS', value: 'flags'}
+        ],
+        networksRequest: false,
+        networks: []
       }
     },
+    sockets: {
+      wifi_list({ data }) {
+        this.networksRequest = false;
+        this.networks = data;
+      }
+    },
+    created() {
+      this.refreshNetworks();
+    },
     methods: {
-      show(e) {
-        this.input = e.target;
-        this.layout = e.target.dataset.layout;
-
-        if (!this.visible)
-          this.visible = true
-      },
-      change() {
-        console.log(this.text = this.input.value);
-      },
-      hide() {
-        this.visible = false;
+      refreshNetworks() {
+        this.networksRequest = true;
+        this.$socket.emit('refresh_networks')
       }
     }
   }
