@@ -22,10 +22,9 @@
                   <td>{{ props.item.ssid || '(No SSID)' }}</td>
                   <td>{{ props.item.flags }}</td>
                   <td>
-                    <v-btn icon @click.stop="{ dialog.open = true; dialog.item = props.item }">
-                      <v-icon v-html="props.item.connected ? 'delete' : 'add'"></v-icon>
+                    <v-btn icon @click.stop="{ dialog.open = true; dialog.item = props.item }" :disabled="props.item.connected">
+                      <v-icon v-html="props.item.connected ? 'done' : 'network_wifi'"></v-icon>
                     </v-btn>
-                    
                   </td>
                 </template>
               </v-data-table>
@@ -70,7 +69,8 @@
         dialog: {
           open: false,
           item: {},
-          pass: ''
+          pass: '',
+          rules: {}
         },
       }
     },
@@ -79,6 +79,11 @@
         this.networks = data;  
         this.networksRequest = false;
         console.log(this.networks);
+      },
+      connect_output({ error, connected }) {
+        console.log(error, connected)
+        this.dialog.rules.pass = error || '';
+        this.dialog = !this.connected;
       }
     },
     created() {
