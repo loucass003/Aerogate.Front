@@ -18,7 +18,7 @@
                 :color="iconColor">{{ icon }}</v-icon>
 
             </v-flex>
-            <v-menu bottom left>
+            <!-- <v-menu bottom left>
               <v-btn icon slot="activator" dark>
                 <v-icon>more_vert</v-icon>
               </v-btn>
@@ -27,7 +27,7 @@
                   <v-list-tile-title>test</v-list-tile-title>
                 </v-list-tile>
               </v-list>
-            </v-menu>
+            </v-menu> -->
           </v-layout>
         </v-container>
       </v-card-media>

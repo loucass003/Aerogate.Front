@@ -1,6 +1,6 @@
 <template>
   <v-container fluid grid-list-md>
-      <draggable :options="{ group: 'components' }" @start="drag=true" @end="drag=false" class="layout wrap">
+    <v-layout wrap>
         <temperature
           name="int."
           :value="inter"
@@ -17,16 +17,19 @@
           text-class="white--text"
           icon-color="yellow"
         ></temperature>
-      </draggable>
+        <grid></grid>
+        <graph></graph>
+    </v-layout>
   </v-container>
 </template>
 
 <script>
-  import draggable from 'vuedraggable'
   import Temperature from "./Temperature";
+  import Graph from "./Graph";
+  import Grid from "./Grid";
 
   export default {
-    components: { Temperature, draggable },
+    components: { Temperature, Graph, Grid },
     name: 'home',
     data() {
         return {
@@ -37,13 +40,7 @@
     },
     sockets:{
       temperatures({inter, ext})  { 
-        console.log(ext, inter);
         return Object.assign(this, { inter, ext })
-      }
-    },
-    methods: {
-      random(min, max) {
-        return Math.floor(Math.random()*(max-min+1)+min);
       }
     }
   }
