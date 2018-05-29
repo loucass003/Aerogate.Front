@@ -8,7 +8,7 @@
               <h1 style="font-size: 5vw">Ouvert</h1>
             </v-flex>
             <v-flex xs6>
-              f
+              
             </v-flex>
             <!-- <v-menu bottom left>
               <v-btn icon slot="activator" dark>

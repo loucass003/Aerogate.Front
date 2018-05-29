@@ -9,7 +9,7 @@
           <v-layout fill-height>
             <v-flex xs6>
               <span class="headline">Temperature {{ name }}</span>
-              <h1 style="font-size: 5vw">{{ value }} °C</h1>
+              <h1 style="font-size: 5vw">{{ value || '--' }} °C</h1>
             </v-flex>
             <v-flex xs6>
               <v-icon

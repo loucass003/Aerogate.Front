@@ -33,13 +33,13 @@
     name: 'home',
     data() {
         return {
-            inter: 20,
-            ext: 9,
+            inter: undefined,
+            ext: undefined,
             myvar: "Home"
         }
     },
     sockets:{
-      temperatures({inter, ext})  { 
+      temperatures({inter = this.inter, ext = this.ext})  { 
         return Object.assign(this, { inter, ext })
       }
     }
